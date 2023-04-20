@@ -68,9 +68,13 @@ async function showSights (url){
     L.geoJSON(jsondata, {
         onEachFeature: function (feature, layer){ //mit onEachFuture soll auf alle zugegriffen werden, was in diesem Feature drinnen ist. z.b. eben Namen
            let prop = feature.properties; //Variabel properties benannt, damits kürzer is
-           layer.bindPopup(prop.NAME);
+           layer.bindPopup(`
+           <img src="${prop.THUMBNAIL}" alt="*">  
+            <h4><a href="${prop.WEITERE_INF}"target="Wien">${prop.NAME}</a></h4>
+            <address>${prop.ADRESSE}</address>
+            `);
             console.log(prop.NAME);//bräucht ich jetzt nicht mehr
-        }
+        } //THUMBNAIL: Foto, WEITERE_INF: Link (href) mit weiteren Infos, target=Wien: Neues Fenster geht auf, das Wien heißt, es geht aber nie mehr als eins auf
     }).addTo(themaLayer.sites);
  // console.log(response, jsondata) 
 } 
