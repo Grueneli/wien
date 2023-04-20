@@ -65,7 +65,13 @@ async function showLines (url){
 async function showSights (url){
     let response = await fetch (url);
     let jsondata = await response.json();
-    L.geoJSON(jsondata).addTo(themaLayer.sites);
+    L.geoJSON(jsondata, {
+        onEachFeature: function (feature, layer){ //mit onEachFuture soll auf alle zugegriffen werden, was in diesem Feature drinnen ist. z.b. eben Namen
+           let prop = feature.properties; //Variabel properties benannt, damits kürzer is
+           layer.bindPopup(prop.NAME);
+            console.log(prop.NAME);//bräucht ich jetzt nicht mehr
+        }
+    }).addTo(themaLayer.sites);
  // console.log(response, jsondata) 
 } 
 async function showZones (url){
