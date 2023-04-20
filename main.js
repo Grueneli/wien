@@ -42,3 +42,6 @@ async function showStops (url){
   console.log(response, jsondata) 
 } // Funktion musst erst definiert werden, bevor sie angezeigt werden kann
 showStops ("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:TOURISTIKHTSVSLOGD&srsName=EPSG:4326&outputFormat=json");
+//Vienna Sightseeing Linien
+showStops ("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:TOURISTIKLINIEVSLOGD&srsName=EPSG:4326&outputFormat=json")
+
