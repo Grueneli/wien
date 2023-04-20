@@ -1,44 +1,44 @@
 /* Vienna Sightseeing Beispiel */
 
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital@0;1&family=Roboto:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital@0;1&family=Roboto:wght@300&display=swap');/* import google fonts*/
 
 body {
-    font-family: "Open Sans", sans-serif;
+    font-family: "Open Sans", sans-serif; /*Schrift open sans, wenns nicht gibt, sans-serif*/
 }
 
 a {
     color: black;
 }
 
-main {
+main { /*max 1200 px. Seite wird nicht größer. margin auto => in die mitte zentriert*/
     max-width: 1200px;
     margin: auto;
 }
 
 header {
     display: grid;
-    grid-template-columns: 80% 20%;
+    grid-template-columns: 80% 20%; /*ist ein Grid. Linke Spalte 80%, rechts Spalte 20% */
 }
 
-header h2 {
+header h2 { /*selektiert Überschrift vom Header und margin = 0 => ohne Abstand*/
     margin: 0;
 }
 
 header nav {
-    text-align: right;
-    font-size: 0.9em;
-    font-weight: bold;
+    text-align: right; /*rechts bündig*/
+    font-size: 0.9em; /*schriftgröße*/
+    font-weight: bold; /*fett gedruckt*/
     padding-top: 1em;
 }
 
 article {
-    margin-top: 0.5em;
+    margin-top: 0.5em; /* Abstand*/ 
 }
 
 #map {
-    width: 100%;
-    height: 85vh;
-    border: 1px solid gray;
+    width: 100%; /*Karten breite, 100%*/
+    height: 85vh; /* Höhe 85% von der visual Höhe => Höhe in Abhängigkeit vom Browser setzen*/
+    border: 1px solid gray; /*Karte bekommt nen grauen Rahmen*/
 }
 
 footer {
@@ -48,5 +48,5 @@ footer {
 }
 
 footer nav {
-    display: inline-block;
+    display: inline-block; /* durch das Inline Block würde jetzt alles nebeneinander angezeigt werden*/
 }
