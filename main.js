@@ -12,6 +12,14 @@ let map = L.map("map").setView([
     stephansdom.lat, stephansdom.lng
 ], 12);
 
+//thematische Layer
+let themaLayer = {
+    stops: L.featureGroup(),
+    lines: L.featureGroup(),
+    zones: L.featureGroup(),
+    sites: L.featureGroup()
+}
+
 // Hintergrundlayer, leaftlet Provider
 let layerControl = L.control.layers({
     "BasemapAT Grau": L.tileLayer.provider("BasemapAT.grau").addTo(map), // ad to map sagt, welcher Layer der Standardlayer ist
@@ -21,6 +29,12 @@ let layerControl = L.control.layers({
     "BasemapAT Oberfläche": L.tileLayer.provider("BasemapAT.surface"),
     "BasemapAT Orthofoto": L.tileLayer.provider("BasemapAT.orthofoto"),
     "BasemapAT Beschriftung": L.tileLayer.provider("BasemapAT.overlay")
+}, {
+//checkbox ein-/ausschalten der Layer
+"Wien Sehenswürdigkeiten Haltestellen": themaLayer.stops,
+"Wien Sehenswürdigkeiten Linien": themaLayer.lines,
+"Fußgängerzonen Wien": themaLayer.zones,
+"Sehenswürdigkeiten Wien": themaLayer.sites
 }).addTo(map);
 
 // Marker Stephansdom
