@@ -24,10 +24,10 @@ let layerControl = L.control.layers({
 }).addTo(map);
 
 // Marker Stephansdom
-L.marker([
+/*L.marker([
     stephansdom.lat, stephansdom.lng
 ]).addTo(map).bindPopup(stephansdom.title).openPopup(); // hier soll der Marker mit bestm. lat und lng angezeigt werden und als titel stephansdom auf popen (openPopup)
-
+*/
 // Maßstab
 L.control.scale({
     imperial: false,
@@ -35,13 +35,36 @@ L.control.scale({
 
 //Geo Json Daten in die Karte einbinden
 //Vienna Sightseeing Haltestellen
+
 async function showStops (url){
     let response = await fetch (url);
     let jsondata = await response.json();
     L.geoJSON(jsondata).addTo(map);
   console.log(response, jsondata) 
-} // Funktion musst erst definiert werden, bevor sie angezeigt werden kann
-showStops ("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:TOURISTIKHTSVSLOGD&srsName=EPSG:4326&outputFormat=json");
-//Vienna Sightseeing Linien
-showStops ("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:TOURISTIKLINIEVSLOGD&srsName=EPSG:4326&outputFormat=json")
+} 
+async function showLines (url){
+    let response = await fetch (url);
+    let jsondata = await response.json();
+    L.geoJSON(jsondata).addTo(map);
+  console.log(response, jsondata) 
+} 
+async function showSights (url){
+    let response = await fetch (url);
+    let jsondata = await response.json();
+    L.geoJSON(jsondata).addTo(map);
+  console.log(response, jsondata) 
+} 
+async function showZones (url){
+    let response = await fetch (url);
+    let jsondata = await response.json();
+    L.geoJSON(jsondata).addTo(map);
+  console.log(response, jsondata) 
+} 
 
+
+// Funktion musst erst definiert werden, bevor sie angezeigt werden kann
+showStops ("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:TOURISTIKHTSVSLOGD&srsName=EPSG:4326&outputFormat=json");
+showLines("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:TOURISTIKLINIEVSLOGD&srsName=EPSG:4326&outputFormat=json")
+showSights("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:SEHENSWUERDIGOGD&srsName=EPSG:4326&outputFormat=json")
+showZones("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:FUSSGEHERZONEOGD&srsName=EPSG:4326&outputFormat=json")
+// lokal eingebunden reicht es den Dateinamen einzugeben
