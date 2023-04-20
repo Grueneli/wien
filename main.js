@@ -94,3 +94,4 @@ showLines("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&vers
 showSights("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:SEHENSWUERDIGOGD&srsName=EPSG:4326&outputFormat=json")
 showZones("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:FUSSGEHERZONEOGD&srsName=EPSG:4326&outputFormat=json")
 // lokal eingebunden reicht es den Dateinamen einzugeben
+
