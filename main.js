@@ -53,15 +53,36 @@ L.control.scale({
 async function showStops (url){
     let response = await fetch (url);
     let jsondata = await response.json();
+    L.geoJSON(jsondata, {
+        onEachFeature: function (feature, layer){
+            let prop = feature.properties;
+            console.log(prop);
+        };
+    }).addTo(themaLayer.stops);
+
     L.geoJSON(jsondata).addTo(themaLayer.stops);
  // console.log(response, jsondata) 
 } 
 async function showLines (url){
     let response = await fetch (url);
     let jsondata = await response.json();
-    L.geoJSON(jsondata).addTo(themaLayer.lines);
+    L.geoJSON(jsondata, {
+        onEachFeature: function (feature, layer){
+            let prop = feature.properties;
+            layer.bindPopup(`
+                <h3><i class="fa-solid fa-bus"></i> ${prop.LINE_NAME} </h3 >
+                <p><i class="fa-solid fa-circle-h"> </i>${prop.FROM_NAME}</p>
+                <p><i class="fa-light fa-arrow-down"></i></p>
+                <p><i class="fa-solid fa-circle-h"> </i></i>${prop.TO_NAME}</p>
+                `);
+            console.log(prop);
+        }
+    }).addTo(themaLayer.lines);
+   // L.geoJSON(jsondata).addTo(themaLayer.lines);
+};
+
  // console.log(response, jsondata) 
-} 
+
 async function showSights (url){
     let response = await fetch (url);
     let jsondata = await response.json();
@@ -73,7 +94,7 @@ async function showSights (url){
             <h4><a href="${prop.WEITERE_INF}"target="Wien">${prop.NAME}</a></h4>
             <address>${prop.ADRESSE}</address>
             `);
-            console.log(prop.NAME);//bräucht ich jetzt nicht mehr
+           // console.log(prop);//bräucht ich jetzt nicht mehr
         } //THUMBNAIL: Foto, WEITERE_INF: Link (href) mit weiteren Infos, target=Wien: Neues Fenster geht auf, das Wien heißt, es geht aber nie mehr als eins auf
     }).addTo(themaLayer.sites);
  // console.log(response, jsondata) 
