@@ -8,9 +8,10 @@ let stephansdom = {
 };
 
 // Karte initialisieren
-let map = L.map("map").setView([
+let map = L.map('map').setView([
     stephansdom.lat, stephansdom.lng
 ], 12);
+
 
 //thematische Layer
 let themaLayer = {
