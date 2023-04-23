@@ -64,8 +64,7 @@ async function showStops (url){
         }
     }).addTo(themaLayer.stops);
 
-    L.geoJSON(jsondata).addTo(themaLayer.stops);
- // console.log(response, jsondata) 
+     // console.log(response, jsondata) 
 } 
 async function showLines (url){
     let response = await fetch (url);
@@ -106,7 +105,20 @@ async function showSights (url){
 async function showZones (url){
     let response = await fetch (url);
     let jsondata = await response.json();
-    L.geoJSON(jsondata).addTo(themaLayer.zones);
+    L.geoJSON(jsondata, {
+        onEachFeature: function (feature, layer){
+            let prop = feature.properties;
+            layer.bindPopup(`
+            <h4> Fußgängerzone ${prop.ADRESSE}</address></h4>
+            <p> <i class="fa-sharp fa-light fa-clock"></i> ${prop.ZEITRAUM}</p>
+            <p> <i class="fa-sharp fa-light fa-circle-info"></i>${prop.AUSN_TEXT} </p>
+            `)
+            console.log(prop)
+        }
+    }
+        
+        
+        ).addTo(themaLayer.zones);
  // console.log(response, jsondata) 
 } 
 
