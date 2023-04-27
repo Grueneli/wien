@@ -199,11 +199,10 @@ async function showHotels (url){
             <h3>${prop.BETRIEB}</h3>  
             <h4>${prop.BETRIEBSART_TXT} , ${prop.KATEGORIE_TXT}</h4>
             <hr> 
-            <address>${prop.ADRESSE}</address>
-            <p>Tel.: ${prop.KONTAKT_TEL}</p>
-            <p>E-Mail: <a href="${prop.KONTAKT_EMAIL}"target="Wien">${prop.KONTAKT_EMAIL}</a></p>
-            <p><a href="${prop.WEBLINK1}"target"="Wien">${prop.WEBLINK1}</a></p>
-
+            Adresse:${prop.ADRESSE}<br>
+            Tel. <a href="tel:${prop.KONTAKT_TEL}">${prop.KONTAKT_TEL}</a><br>
+            E-Mail: <a href="mailto:${prop.KONTAKT_EMAIL}"target="Wien">${prop.KONTAKT_EMAIL}</a><br>
+            <a href="${prop.WEBLINK1}"target"="Wien">${prop.WEBLINK1}</a><br>
             `);
            //console.log(prop);//bräucht ich jetzt nicht mehr
         } //THUMBNAIL: Foto, WEITERE_INF: Link (href) mit weiteren Infos, target=Wien: Neues Fenster geht auf, das Wien heißt, es geht aber nie mehr als eins auf
