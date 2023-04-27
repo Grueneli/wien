@@ -207,6 +207,10 @@ async function showHotels (url){
            //console.log(prop);//bräucht ich jetzt nicht mehr
         } //THUMBNAIL: Foto, WEITERE_INF: Link (href) mit weiteren Infos, target=Wien: Neues Fenster geht auf, das Wien heißt, es geht aber nie mehr als eins auf
     }).addTo(themaLayer.hotels);
+
+    //variabel definieren icon. else if: 1*, 2* etc. 
+    // if (prop.KATEGORIE_TXT == "3*")
+   //  if else
 }
 //hr = horizontale Linie
 
