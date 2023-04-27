@@ -18,7 +18,8 @@ let themaLayer = {
     stops: L.featureGroup().addTo(map),
     lines: L.featureGroup().addTo(map),
     zones: L.featureGroup().addTo(map),
-    sites: L.featureGroup().addTo(map)
+    sites: L.featureGroup().addTo(map),
+    hotels: L.featureGroup().addTo(map)
 }
 
 // Hintergrundlayer, leaftlet Provider
@@ -35,7 +36,8 @@ let layerControl = L.control.layers({
 "Wien Sehenswürdigkeiten Haltestellen": themaLayer.stops,
 "Wien Sehenswürdigkeiten Linien": themaLayer.lines,
 "Fußgängerzonen Wien": themaLayer.zones,
-"Sehenswürdigkeiten Wien": themaLayer.sites
+"Sehenswürdigkeiten Wien": themaLayer.sites,
+"Hotels in Wien": themaLayer.hotels,
 }).addTo(map);
 
 // Marker Stephansdom
@@ -176,6 +178,40 @@ async function showZones (url){
  // console.log(response, jsondata) 
 } 
 
+//hotels
+async function showHotels (url){
+    let response = await fetch (url);
+    let jsondata = await response.json();
+    L.geoJSON(jsondata, {
+        pointToLayer: function(feature, latlng) {
+            return L.marker(latlng, {
+                icon: L.icon({
+                    iconUrl: 'icons/hotel.png',
+                    iconSize: [32, 37],
+                    iconAnchor: [16, 37], //beschreibt die Position von der Ecke des popups
+                    popupAnchor: [0, -37] //popup Anchor bedeutet, wo der Popup dann aufgemacht wird
+                }),      
+            });
+        },
+        onEachFeature: function (feature, layer){ //mit onEachFuture soll auf alle zugegriffen werden, was in diesem Feature drinnen ist. z.b. eben Namen
+           let prop = feature.properties; //Variabel properties benannt, damits kürzer is
+           layer.bindPopup(`
+            <h3>${prop.BETRIEB}</h3>  
+            <h4>${prop.BETRIEBSART_TXT} , ${prop.KATEGORIE_TXT}</h4>
+            <hr> 
+            <address>${prop.ADRESSE}</address>
+            <p>Tel.: ${prop.KONTAKT_TEL}</p>
+            <p>E-Mail: <a href="${prop.KONTAKT_EMAIL}"target="Wien">${prop.KONTAKT_EMAIL}</a></p>
+            <p><a href="${prop.WEBLINK1}"target"="Wien">${prop.WEBLINK1}</a></p>
+
+            `);
+           //console.log(prop);//bräucht ich jetzt nicht mehr
+        } //THUMBNAIL: Foto, WEITERE_INF: Link (href) mit weiteren Infos, target=Wien: Neues Fenster geht auf, das Wien heißt, es geht aber nie mehr als eins auf
+    }).addTo(themaLayer.hotels);
+}
+//hr = horizontale Linie
+
+
 //mit addTo(themaLayer.zones) wird der Thema Layer zones mit der Checkbox verknüpft, so dass man s ein ausschalten kann
 // mit addTo(map) wirds einfach nur der Karte hinzugefügt
 
@@ -184,6 +220,7 @@ showStops ("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&ver
 showLines("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:TOURISTIKLINIEVSLOGD&srsName=EPSG:4326&outputFormat=json")
 showSights("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:SEHENSWUERDIGOGD&srsName=EPSG:4326&outputFormat=json")
 showZones("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:FUSSGEHERZONEOGD&srsName=EPSG:4326&outputFormat=json")
+showHotels("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:UNTERKUNFTOGD&srsName=EPSG:4326&outputFormat=json")
 // lokal eingebunden reicht es den Dateinamen einzugeben
 
 /*
