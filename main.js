@@ -16,8 +16,8 @@ map.addControl(new L.Control.Fullscreen())
 //thematische Layer
 let themaLayer = {
     stops: L.featureGroup(),
-    lines: L.featureGroup().addTo(map),
-    zones: L.featureGroup(),
+    lines: L.featureGroup(),
+    zones: L.featureGroup().addTo(map),
     sites: L.featureGroup()
 }
 
@@ -70,16 +70,35 @@ async function showStops (url){
 async function showLines (url){
     let response = await fetch (url);
     let jsondata = await response.json();
+    let lineNames = {}; //geschwungene Klammern = Objekt
+    let lineColors = { // website für die Farben: https://clrs.cc/
+        "1": "#FF4136", //red
+        "2": "#FFDC00",//yellow
+        "3": "#0074D9",//blue
+        "4": "#2ECC40",//green
+        "5": "#AAAAAA",//grey
+        "6": "#FF851B"//orange
+    }
+      
     L.geoJSON(jsondata, {
+        style: function (feature) {
+            return {
+                color: lineColors[feature.properties.LINE_ID],
+                weight: 3, //dicke
+                dashArray: [10,6] //gestrichelte Linie : 10 Einheiten Strich, 6 kein Strich
+            };
+        },
         onEachFeature: function (feature, layer){
             let prop = feature.properties;
             layer.bindPopup(`
                 <h3><i class="fa-solid fa-bus"></i> ${prop.LINE_NAME} </h3 >
-                <p><i class="fa-solid fa-circle-h"> </i>${prop.FROM_NAME}</p>
-                <p><i class="fa-light fa-arrow-down"></i></p>
-                <p><i class="fa-solid fa-circle-h"> </i></i>${prop.TO_NAME}</p>
+                <p><i class="fa-regular fa-circle-stop"> </i>${prop.FROM_NAME}</p>
+                <p><i class="fa-solid fa-down-long"></i></p>
+                <p><i class="fa-regular fa-circle-stop"> </i></i>${prop.TO_NAME}</p>
                 `);
-            //console.log(prop);
+                lineNames[prop.LINE_ID] = prop.LINE_NAME;
+                console.log(lineNames)
+            console.log(prop);
         }
     }).addTo(themaLayer.lines);
    // L.geoJSON(jsondata).addTo(themaLayer.lines);
@@ -106,13 +125,23 @@ async function showSights (url){
 async function showZones (url){
     let response = await fetch (url);
     let jsondata = await response.json();
+
+
     L.geoJSON(jsondata, {
+        style: function (feature) {
+            return {
+                color: "#F012BE", 
+                opacity: 0.4, //dicke
+                fillOpacity: 0.1,
+                weight: 1
+            };
+        },
         onEachFeature: function (feature, layer){
             let prop = feature.properties;
             layer.bindPopup(`
             <h4> Fußgängerzone ${prop.ADRESSE}</address></h4>
-            <p> <i class="fa-sharp fa-light fa-clock"></i> ${prop.ZEITRAUM || "dauerhaft"}</p>
-            <p> <i class="fa-sharp fa-light fa-circle-info"></i>${prop.AUSN_TEXT || "keine Ausnahmen"} </p>
+            <p> <i class="fa-regular fa-clock"></i> ${prop.ZEITRAUM || "dauerhaft"}</p>
+            <p> <i class="fa-solid fa-circle-info"></i>${prop.AUSN_TEXT || "keine Ausnahmen"} </p>
             `);
             //console.log(prop)
         }
