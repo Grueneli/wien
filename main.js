@@ -17,8 +17,8 @@ map.addControl(new L.Control.Fullscreen())
 let themaLayer = {
     stops: L.featureGroup(),
     lines: L.featureGroup(),
-    zones: L.featureGroup().addTo(map),
-    sites: L.featureGroup()
+    zones: L.featureGroup(),
+    sites: L.featureGroup().addTo(map)
 }
 
 // Hintergrundlayer, leaftlet Provider
