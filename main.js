@@ -10,15 +10,15 @@ let stephansdom = {
 // Karte initialisieren
 let map = L.map('map').setView([
     stephansdom.lat, stephansdom.lng
-], 12);
+], 15);
 map.addControl(new L.Control.Fullscreen())
 
 //thematische Layer
 let themaLayer = {
     stops: L.featureGroup(),
-    lines: L.featureGroup(),
+    lines: L.featureGroup().addTo(map),
     zones: L.featureGroup(),
-    sites: L.featureGroup().addTo(map)
+    sites: L.featureGroup()
 }
 
 // Hintergrundlayer, leaftlet Provider
@@ -61,7 +61,7 @@ async function showStops (url){
                 <h3><i class="fa-solid fa-bus"></i> ${prop.LINE_NAME} </h3>
                 <p>${prop.STAT_NAME}</p>
                 `);
-            console.log(prop);
+            //console.log(prop);
         }
     }).addTo(themaLayer.stops);
 
@@ -79,7 +79,7 @@ async function showLines (url){
                 <p><i class="fa-light fa-arrow-down"></i></p>
                 <p><i class="fa-solid fa-circle-h"> </i></i>${prop.TO_NAME}</p>
                 `);
-            console.log(prop);
+            //console.log(prop);
         }
     }).addTo(themaLayer.lines);
    // L.geoJSON(jsondata).addTo(themaLayer.lines);
@@ -111,10 +111,10 @@ async function showZones (url){
             let prop = feature.properties;
             layer.bindPopup(`
             <h4> Fußgängerzone ${prop.ADRESSE}</address></h4>
-            <p> <i class="fa-sharp fa-light fa-clock"></i> ${prop.ZEITRAUM}</p>
-            <p> <i class="fa-sharp fa-light fa-circle-info"></i>${prop.AUSN_TEXT} </p>
-            `)
-            console.log(prop)
+            <p> <i class="fa-sharp fa-light fa-clock"></i> ${prop.ZEITRAUM || "dauerhaft"}</p>
+            <p> <i class="fa-sharp fa-light fa-circle-info"></i>${prop.AUSN_TEXT || "keine Ausnahmen"} </p>
+            `);
+            //console.log(prop)
         }
     }
         
