@@ -97,8 +97,8 @@ async function showLines (url){
                 <p><i class="fa-regular fa-circle-stop"> </i></i>${prop.TO_NAME}</p>
                 `);
                 lineNames[prop.LINE_ID] = prop.LINE_NAME;
-                console.log(lineNames)
-            console.log(prop);
+              //  console.log(lineNames)
+           // console.log(prop);
         }
     }).addTo(themaLayer.lines);
    // L.geoJSON(jsondata).addTo(themaLayer.lines);
