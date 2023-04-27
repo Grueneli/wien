@@ -162,3 +162,25 @@ showSights("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&ver
 showZones("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:FUSSGEHERZONEOGD&srsName=EPSG:4326&outputFormat=json")
 // lokal eingebunden reicht es den Dateinamen einzugeben
 
+/*
+let kondlFarb = {
+    laura: "white",
+    sebastian: "blue",
+    mirjam: "beige"
+}
+kondlFarb.["mirjam"]
+kondlFarb.mirjam
+
+let kondlFarben = [
+    {
+        "laura": "white",
+        "size": "large"
+    },
+    {
+        "sebastian": "blue"
+    }
+]
+ kondlFarben[1]["sebastian"]
+oder: kondlFarben[1].sebastian
+
+*/
