@@ -58,7 +58,7 @@ async function showStops (url){
         onEachFeature: function (feature, layer){
             let prop = feature.properties;
             layer.bindPopup(`
-                <h3><i class="fa-solid fa-bus"></i> ${prop.LINE_NAME} </h3>
+                <h4><i class="fa-solid fa-bus"></i> ${prop.LINE_NAME} </h4>
                 <p>${prop.STAT_NAME}</p>
                 `);
             //console.log(prop);
@@ -106,10 +106,22 @@ async function showLines (url){
 
  // console.log(response, jsondata) 
 
+// https://mapicons.mapsmarker.com/ => icon runterladen und in den Projektordner abspeichern
+
 async function showSights (url){
     let response = await fetch (url);
     let jsondata = await response.json();
     L.geoJSON(jsondata, {
+        pointToLayer: function(feature, latlng) {
+            return L.marker(latlng, {
+                icon: L.icon({
+                    iconUrl: 'icons/photo.png',
+                    iconSize: [32, 37],
+                    iconAnchor: [16, 37], //beschreibt die Position von der Ecke des popups
+                    popupAnchor: [0, -37] //popup Anchor bedeutet, wo der Popup dann aufgemacht wird
+                }),      
+            });
+        },
         onEachFeature: function (feature, layer){ //mit onEachFuture soll auf alle zugegriffen werden, was in diesem Feature drinnen ist. z.b. eben Namen
            let prop = feature.properties; //Variabel properties benannt, damits kürzer is
            layer.bindPopup(`
