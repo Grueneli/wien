@@ -15,9 +15,9 @@ map.addControl(new L.Control.Fullscreen())
 
 //thematische Layer
 let themaLayer = {
-    stops: L.featureGroup(),
-    lines: L.featureGroup(),
-    zones: L.featureGroup(),
+    stops: L.featureGroup().addTo(map),
+    lines: L.featureGroup().addTo(map),
+    zones: L.featureGroup().addTo(map),
     sites: L.featureGroup().addTo(map)
 }
 
@@ -51,10 +51,22 @@ L.control.scale({
 //Geo Json Daten in die Karte einbinden
 //Vienna Sightseeing Haltestellen
 
-async function showStops (url){
+async function showStops (url){ 
     let response = await fetch (url);
     let jsondata = await response.json();
     L.geoJSON(jsondata, {
+        pointToLayer: function(feature, latlng) {
+            console.log(feature.properties)
+            return L.marker(latlng, {
+                icon: L.icon({
+                    iconUrl: `icons/bus_${feature.properties.LINE_ID}.png`,
+                    iconSize: [32, 37],
+                    iconAnchor: [16, 37], //beschreibt die Position von der Ecke des popups
+                    popupAnchor: [0, -37] //popup Anchor bedeutet, wo der Popup dann aufgemacht wird
+                }),      
+            });
+        },
+    
         onEachFeature: function (feature, layer){
             let prop = feature.properties;
             layer.bindPopup(`
