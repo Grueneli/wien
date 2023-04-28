@@ -58,7 +58,7 @@ async function showStops (url){
     let jsondata = await response.json();
     L.geoJSON(jsondata, {
         pointToLayer: function(feature, latlng) {
-            console.log(feature.properties)
+            //console.log(feature.properties)
             return L.marker(latlng, {
                 icon: L.icon({
                     iconUrl: `icons/bus_${feature.properties.LINE_ID}.png`,
@@ -122,37 +122,37 @@ async function showLines (url){
 
 // https://mapicons.mapsmarker.com/ => icon runterladen und in den Projektordner abspeichern
 
-async function showSights (url){
+async function showSights (url){ 
     let response = await fetch (url);
     let jsondata = await response.json();
     L.geoJSON(jsondata, {
         pointToLayer: function(feature, latlng) {
+            //console.log(feature.properties)
             return L.marker(latlng, {
                 icon: L.icon({
-                    iconUrl: 'icons/photo.png',
+                   iconUrl: 'icons/photo.png',
                     iconSize: [32, 37],
                     iconAnchor: [16, 37], //beschreibt die Position von der Ecke des popups
                     popupAnchor: [0, -37] //popup Anchor bedeutet, wo der Popup dann aufgemacht wird
                 }),      
             });
         },
-        onEachFeature: function (feature, layer){ //mit onEachFuture soll auf alle zugegriffen werden, was in diesem Feature drinnen ist. z.b. eben Namen
-           let prop = feature.properties; //Variabel properties benannt, damits kürzer is
-           layer.bindPopup(`
-           <img src="${prop.THUMBNAIL}" alt="*">  
-            <h4><a href="${prop.WEITERE_INF}"target="Wien">${prop.NAME}</a></h4>
-            <address>${prop.ADRESSE}</address>
-            `);
-           // console.log(prop);//bräucht ich jetzt nicht mehr
-        } //THUMBNAIL: Foto, WEITERE_INF: Link (href) mit weiteren Infos, target=Wien: Neues Fenster geht auf, das Wien heißt, es geht aber nie mehr als eins auf
+    
+        onEachFeature: function (feature, layer){
+            let prop = feature.properties;
+            layer.bindPopup(`
+                <h4><i class="fa-solid fa-bus"></i> ${prop.LINE_NAME} </h4>
+                <p>${prop.STAT_NAME}</p>
+                `);
+            //console.log(prop);
+        }
     }).addTo(themaLayer.sites);
- // console.log(response, jsondata) 
+
+     // console.log(response, jsondata) 
 } 
 async function showZones (url){
     let response = await fetch (url);
     let jsondata = await response.json();
-
-
     L.geoJSON(jsondata, {
         style: function (feature) {
             return {
@@ -179,39 +179,53 @@ async function showZones (url){
 } 
 
 //hotels
-async function showHotels (url){
+async function showHotels(url) {
     let response = await fetch (url);
-    let jsondata = await response.json();
+    let jsondata = await response.json ();
     L.geoJSON(jsondata, {
-        pointToLayer: function(feature, latlng) {
-            return L.marker(latlng, {
-                icon: L.icon({
-                    iconUrl: 'icons/hotel.png',
+        pointToLayer: function (feature, latlng) {
+            if (feature.properties.KATEGORIE_TXT == "nicht kategorisiert") {
+                icon = "icons/hotel_0star.png"
+            } else if (feature.properties.KATEGORIE_TXT == "1*") {
+                icon = "icons/hotel_1star.png"
+            } else if (feature.properties.KATEGORIE_TXT == "2*") {
+                icon = "icons/hotel_2stars.png"
+            } else if (feature.properties.KATEGORIE_TXT == "3*") {
+                icon = "icons/hotel_3stars.png"
+            } else if (feature.properties.KATEGORIE_TXT == "4*") {
+                icon = "icons/hotel_4stars.png"
+            } else if (feature.properties.KATEGORIE_TXT == "5*") {
+                icon = "icons/hotel_5stars.png"
+            }
+
+            return L.marker (latlng, {
+                icon: L.icon ({
+                    iconUrl: icon,
                     iconSize: [32, 37],
-                    iconAnchor: [16, 37], //beschreibt die Position von der Ecke des popups
-                    popupAnchor: [0, -37] //popup Anchor bedeutet, wo der Popup dann aufgemacht wird
-                }),      
+                    iconAnchor: [16, 37],
+                    popupAnchor: [0, -37],
+                })
             });
         },
-        onEachFeature: function (feature, layer){ //mit onEachFuture soll auf alle zugegriffen werden, was in diesem Feature drinnen ist. z.b. eben Namen
-           let prop = feature.properties; //Variabel properties benannt, damits kürzer is
-           layer.bindPopup(`
-            <h3>${prop.BETRIEB}</h3>  
-            <h4>${prop.BETRIEBSART_TXT} , ${prop.KATEGORIE_TXT}</h4>
-            <hr> 
-            Adresse:${prop.ADRESSE}<br>
+        onEachFeature: function (feature, layer) {
+            let prop = feature.properties;
+            layer.bindPopup (`
+            <h3> ${prop.BETRIEB}</h3>
+            <h4> ${prop.BETRIEBSART_TXT} ${prop.KATEGORIE_TXT} </4>
+            <hr>
+            Adresse: ${prop.Adresse}<br>
             Tel. <a href="tel:${prop.KONTAKT_TEL}">${prop.KONTAKT_TEL}</a><br>
-            E-Mail: <a href="mailto:${prop.KONTAKT_EMAIL}"target="Wien">${prop.KONTAKT_EMAIL}</a><br>
-            <a href="${prop.WEBLINK1}"target"="Wien">${prop.WEBLINK1}</a><br>
-            `);
-           //console.log(prop);//bräucht ich jetzt nicht mehr
-        } //THUMBNAIL: Foto, WEITERE_INF: Link (href) mit weiteren Infos, target=Wien: Neues Fenster geht auf, das Wien heißt, es geht aber nie mehr als eins auf
+            E-Mail: <a href="mailto:${prop.KONTAKT_EMAIL}" target="Wien">${prop.KONTAKT_EMAIL}</a><br>
+            Web: <a href="${prop.WEBLINK1}" target="Wien">${prop.WEBLINK1}</a>
+            `)
+        }
     }).addTo(themaLayer.hotels);
+}
 
     //variabel definieren icon. else if: 1*, 2* etc. 
     // if (prop.KATEGORIE_TXT == "3*")
    //  if else
-}
+
 //hr = horizontale Linie
 
 
