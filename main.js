@@ -19,7 +19,8 @@ let themaLayer = {
     lines: L.featureGroup().addTo(map),
     zones: L.featureGroup().addTo(map),
     sites: L.featureGroup().addTo(map),
-    hotels: L.featureGroup().addTo(map)
+    hotels: L.markerClusterGroup() // anstelle von feature Group markerClusterGroup, damit es geclustert wird
+
 }
 
 // Hintergrundlayer, leaftlet Provider
@@ -37,7 +38,7 @@ let layerControl = L.control.layers({
 "Wien Sehenswürdigkeiten Linien": themaLayer.lines,
 "Fußgängerzonen Wien": themaLayer.zones,
 "Sehenswürdigkeiten Wien": themaLayer.sites,
-"Hotels in Wien": themaLayer.hotels,
+"Hotels in Wien": themaLayer.hotels.addTo(map), //add to Map hierhin, dann werden die Icons auf der Karte eingezeigt
 }).addTo(map);
 
 // Marker Stephansdom
