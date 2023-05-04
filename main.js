@@ -184,18 +184,18 @@ async function showHotels(url) {
     let jsondata = await response.json ();
     L.geoJSON(jsondata, {
         pointToLayer: function (feature, latlng) {
-            if (feature.properties.KATEGORIE_TXT == "nicht kategorisiert") {
-                icon = "icons/hotel_0star.png"
-            } else if (feature.properties.KATEGORIE_TXT == "1*") {
+             if (feature.properties.KATEGORIE_TXT === "1*") {
                 icon = "icons/hotel_1star.png"
-            } else if (feature.properties.KATEGORIE_TXT == "2*") {
+            } else if (feature.properties.KATEGORIE_TXT === "2*") {
                 icon = "icons/hotel_2stars.png"
-            } else if (feature.properties.KATEGORIE_TXT == "3*") {
+            } else if (feature.properties.KATEGORIE_TXT === "3*") {
                 icon = "icons/hotel_3stars.png"
-            } else if (feature.properties.KATEGORIE_TXT == "4*") {
+            } else if (feature.properties.KATEGORIE_TXT === "4*") {
                 icon = "icons/hotel_4stars.png"
-            } else if (feature.properties.KATEGORIE_TXT == "5*") {
+            } else if (feature.properties.KATEGORIE_TXT === "5*") {
                 icon = "icons/hotel_5stars.png"
+            } else {
+                icon = "icons/hotel_0star.png"
             }
 
             return L.marker (latlng, {
@@ -213,7 +213,7 @@ async function showHotels(url) {
             <h3> ${prop.BETRIEB}</h3>
             <h4> ${prop.BETRIEBSART_TXT} ${prop.KATEGORIE_TXT} </4>
             <hr>
-            Adresse: ${prop.Adresse}<br>
+            Adresse: ${prop.ADRESSE}<br>
             Tel. <a href="tel:${prop.KONTAKT_TEL}">${prop.KONTAKT_TEL}</a><br>
             E-Mail: <a href="mailto:${prop.KONTAKT_EMAIL}" target="Wien">${prop.KONTAKT_EMAIL}</a><br>
             Web: <a href="${prop.WEBLINK1}" target="Wien">${prop.WEBLINK1}</a>
