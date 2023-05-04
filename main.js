@@ -19,7 +19,9 @@ let themaLayer = {
     lines: L.featureGroup().addTo(map),
     zones: L.featureGroup().addTo(map),
     sites: L.featureGroup().addTo(map),
-    hotels: L.markerClusterGroup() // anstelle von feature Group markerClusterGroup, damit es geclustert wird
+    hotels: L.markerClusterGroup({
+        disableClusteringAtZoom: 17
+    }) // anstelle von feature Group markerClusterGroup, damit es geclustert wird
 
 }
 
