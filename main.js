@@ -13,6 +13,10 @@ let map = L.map('map').setView([
 ], 15);
 map.addControl(new L.Control.Fullscreen())
 
+//Mini Map
+var osm2 = new L.tileLayer.provider("BasemapAT.basemap"); // wir nehmen einen der layer von den Hintergrundlayern; daher L.tileLayer.provider
+var miniMap = new L.Control.MiniMap(osm2).addTo(map);
+
 //thematische Layer
 let themaLayer = {
     stops: L.featureGroup().addTo(map),
@@ -25,7 +29,8 @@ let themaLayer = {
 
 }
 //Leaflet Hash
-let hash = new L.Hash(map);
+let hash = new L.Hash(map); // damit sich die Url mit verschieben der Karte auch verändert
+
 
 
 // Hintergrundlayer, leaftlet Provider
