@@ -14,8 +14,14 @@ let map = L.map('map').setView([
 map.addControl(new L.Control.Fullscreen())
 
 //Mini Map
-var osm2 = new L.tileLayer.provider("BasemapAT.basemap"); // wir nehmen einen der layer von den Hintergrundlayern; daher L.tileLayer.provider
-var miniMap = new L.Control.MiniMap(osm2).addTo(map);
+ // wir nehmen einen der layer von den Hintergrundlayern; daher L.tileLayer.provider
+var miniMap = new L.Control.MiniMap(
+    L.tileLayer.provider("BasemapAT.basemap"), {
+        toggleDisplay: true
+    }
+).addTo(map);
+  
+
 
 //thematische Layer
 let themaLayer = {
