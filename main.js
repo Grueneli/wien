@@ -24,6 +24,9 @@ let themaLayer = {
     }) // anstelle von feature Group markerClusterGroup, damit es geclustert wird
 
 }
+//Leaflet Hash
+let hash = new L.Hash(map);
+
 
 // Hintergrundlayer, leaftlet Provider
 let layerControl = L.control.layers({
